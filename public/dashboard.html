@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Executivo | Workfeed</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 font-sans">
+
+    <!-- Topbar Corporativo -->
+    <nav class="bg-slate-900 text-white px-8 py-4 flex justify-between items-center shadow-lg">
+        <div class="flex items-center space-x-4">
+            <a href="/landing" class="flex items-center" style="background: white; padding: 4px 8px; border-radius: 6px;">
+  <img src="/workfeed_logo.png" alt="Workfeed" style="height: 24px; width: auto; display: block; object-fit: contain;" />
+</a>
+            <span class="text-xs bg-white/10 text-slate-300 px-3 py-1 rounded border border-white/5 font-mono">Workfeed — Painel Corporativo</span>
+        </div>
+        <div class="flex items-center space-x-6">
+            <span class="text-xs text-slate-400 hidden md:inline-block">Ambiente Executivo RH / SST</span>
+            <div class="w-10 h-10 bg-slate-700 rounded-full flex items-center justify-center font-bold text-slate-200">S</div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-6 py-10">
+        <!-- Stats Grid -->
+        <div class="grid md:grid-cols-4 gap-6 mb-10">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                <p class="text-slate-500 text-sm font-medium mb-1">Mapeamento de Sobrecarga</p>
+                <h3 id="avgStress" class="text-3xl font-bold text-slate-900">--</h3>
+                <span class="text-[10px] text-slate-400 block mt-1">Escala consolidada de 0 a 10</span>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                <p class="text-slate-500 text-sm font-medium mb-1">Participação Média</p>
+                <h3 id="avgIMC" class="text-3xl font-bold text-slate-900">--</h3>
+                <span class="text-[10px] text-slate-400 block mt-1">Percentual de resposta por setor</span>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                <p class="text-slate-500 text-sm font-medium mb-1">Total de Check-ins</p>
+                <h3 id="totalTriagens" class="text-3xl font-bold text-slate-900">--</h3>
+                <span class="text-[10px] text-slate-400 block mt-1">Volume acumulado de diálogos</span>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 border-l-4 border-l-yellow-600">
+                <p class="text-slate-500 text-sm font-medium mb-1">Setores em Atenção</p>
+                <h3 class="text-3xl font-bold text-yellow-700">2</h3>
+                <span class="text-[10px] text-slate-400 block mt-1">Setores com sinais elevados de sobrecarga</span>
+            </div>
+        </div>
+
+        <!-- Charts Grid -->
+        <div class="grid md:grid-cols-2 gap-10">
+            <!-- Bar Chart -->
+            <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
+                <h4 class="text-xl font-bold mb-8">Sinais de Sobrecarga por Setor</h4>
+                <canvas id="barChart" height="300"></canvas>
+            </div>
+            <!-- Line Chart -->
+            <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
+                <h4 class="text-xl font-bold mb-8">Adesão às Campanhas de Escuta</h4>
+                <canvas id="lineChart" height="300"></canvas>
+            </div>
+        </div>
+        
+        <!-- Call to Action no Painel -->
+        <div class="mt-16 bg-white border border-slate-200 rounded-2xl p-8 text-center max-w-2xl mx-auto space-y-4">
+            <h3 class="text-lg font-bold text-slate-900">Deseja expandir os canais de escuta ocupacional na sua organização?</h3>
+            <p class="text-xs text-slate-500 max-w-md mx-auto leading-relaxed">
+                Estruture campanhas específicas e integre o WhatsApp corporativo para seus colaboradores, visualizando as tendências estatísticas de forma contínua com a Workfeed.
+            </p>
+            <div class="pt-2">
+                <a href="/landing#cadastro" class="bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider px-6 py-3 rounded transition-all">
+                    Solicitar Proposta de Expansão
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        async function updateDashboard() {
+            try {
+                const response = await fetch('/api/stats');
+                const data = await response.json();
+
+                // Update Widgets
+                const total = data.sectorStats.reduce((acc, curr) => acc + parseInt(curr.total_colaboradores), 0);
+                const avgStress = data.sectorStats.reduce((acc, curr) => acc + parseFloat(curr.media_estresse), 0) / (data.sectorStats.length || 1);
+                
+                // Mapeia participação média simulada de 0 a 100%
+                const avgParticipacao = 81.5;
+
+                document.getElementById('totalTriagens').innerText = total;
+                document.getElementById('avgStress').innerText = avgStress.toFixed(1);
+                document.getElementById('avgIMC').innerText = avgParticipacao.toFixed(1) + '%';
+
+                // Update Bar Chart
+                barChart.data.labels = data.sectorStats.map(s => s.setor);
+                barChart.data.datasets[0].data = data.sectorStats.map(s => s.media_estresse);
+                barChart.update();
+
+                // Update Line Chart
+                lineChart.data.labels = data.lineChartData.map(d => d.month);
+                lineChart.data.datasets[0].data = data.lineChartData.map(d => d.engajamento);
+                lineChart.update();
+
+            } catch (err) {
+                console.error('Erro ao buscar estatísticas do servidor:', err);
+            }
+        }
+
+        // Initialize Bar Chart
+        const barCtx = document.getElementById('barChart').getContext('2d');
+        const barChart = new Chart(barCtx, {
+            type: 'bar',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Percepção de Sobrecarga (Média)',
+                    data: [],
+                    backgroundColor: '#1f4e5f',
+                    borderRadius: 8
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false }
+        });
+
+        // Initialize Line Chart
+        const lineCtx = document.getElementById('lineChart').getContext('2d');
+        const lineChart = new Chart(lineCtx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: '% de Resposta Voluntária',
+                    data: [],
+                    borderColor: '#2f7d6d',
+                    tension: 0.4,
+                    fill: true,
+                    backgroundColor: 'rgba(47, 125, 109, 0.1)'
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false }
+        });
+
+        // Initial Load
+        updateDashboard();
+        // Polling every 10 seconds
+        setInterval(updateDashboard, 10000);
+    </script>
+</body>
+</html>

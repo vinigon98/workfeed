@@ -1,0 +1,23 @@
+{
+  "name": "radar-corp-functions",
+  "description": "Firebase Cloud Functions para a API da Radar Corp",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions"
+  },
+  "engines": {
+    "node": "22"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "firebase-admin": "^12.0.0",
+    "firebase-functions": "^5.1.0"
+  },
+  "private": true
+}

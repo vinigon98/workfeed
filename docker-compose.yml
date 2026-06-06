@@ -1,0 +1,103 @@
+services:
+  db:
+    image: pgvector/pgvector:pg15
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_DB=psicosafe
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres_password
+
+  redis:
+    image: redis:alpine
+    restart: always
+    volumes:
+      - redis_data:/data
+
+  # Chatwoot Services
+  chatwoot_web:
+    image: chatwoot/chatwoot:latest
+    restart: always
+    depends_on:
+      - db
+      - redis
+    environment:
+      - SECRET_KEY_BASE=d3f9b2c8a1e4f5d6c7b8a90123456789abcdef0123456789abcdef0123456789
+      - FRONTEND_URL=http://localhost:3005
+      - POSTGRES_DATABASE=psicosafe
+      - POSTGRES_HOST=db
+      - POSTGRES_USERNAME=postgres
+      - POSTGRES_PASSWORD=postgres_password
+      - REDIS_URL=redis://redis:6379/1
+      - RAILS_ENV=production
+      - NODE_ENV=production
+      - INSTALLATION_ENV=on-premise
+    entrypoint: docker/entrypoints/rails.sh
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    ports:
+      - "3005:3000"
+
+  chatwoot_worker:
+    image: chatwoot/chatwoot:latest
+    restart: always
+    depends_on:
+      - db
+      - redis
+    environment:
+      - SECRET_KEY_BASE=d3f9b2c8a1e4f5d6c7b8a90123456789abcdef0123456789abcdef0123456789
+      - POSTGRES_DATABASE=psicosafe
+      - POSTGRES_HOST=db
+      - POSTGRES_USERNAME=postgres
+      - POSTGRES_PASSWORD=postgres_password
+      - REDIS_URL=redis://redis:6379/1
+      - RAILS_ENV=production
+      - NODE_ENV=production
+    entrypoint: docker/entrypoints/rails.sh
+    command: bundle exec sidekiq -C config/sidekiq.yml
+
+  # Typebot Services
+  typebot_builder:
+    image: baptistearno/typebot-builder:latest
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "8090:3000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres_password@db:5432/psicosafe
+      - ENCRYPTION_SECRET=super_secret_key_32_chars_123456
+      - NEXTAUTH_URL=http://localhost:8090
+      - NEXTAUTH_SECRET=um_segredo_muito_longo_e_seguro_123456
+      - NEXT_PUBLIC_VIEWER_URL=http://localhost:8091
+      - ADMIN_EMAIL=admin@admin.com
+      - DISABLE_SIGNUP=false
+      - AUTH_PROVIDERS=email
+      - NEXT_PUBLIC_AUTH_PROVIDERS=email
+      # Forçando o SMTP Dummy para habilitar a UI de E-mail
+      - SMTP_HOST=localhost
+      - SMTP_PORT=1025
+      - SMTP_USERNAME=test
+      - SMTP_PASSWORD=test
+      - NEXT_PUBLIC_SMTP_FROM=admin@admin.com
+
+  typebot_viewer:
+    image: baptistearno/typebot-viewer:latest
+    restart: always
+    depends_on:
+      - typebot_builder
+    ports:
+      - "8091:3000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres_password@db:5432/psicosafe
+      - NEXT_PUBLIC_TYPEBOT_VIEWER_URL=http://localhost:8091
+      - ENCRYPTION_SECRET=super_secret_key_32_chars_123456
+      - NEXTAUTH_SECRET=um_segredo_muito_longo_e_seguro_123456
+      - AUTH_PROVIDERS=email
+      - NEXT_PUBLIC_AUTH_PROVIDERS=email
+
+volumes:
+  postgres_data:
+  redis_data:
