@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "workfeed-59a86"
+  },
+  "targets": {
+    "workfeed-59a86": {
+      "hosting": {
+        "work-feed": [
+          "work-feed"
+        ]
+      }
+    }
   }
 }

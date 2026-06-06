@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "target": "work-feed",
     "public": "public",
     "ignore": [
       "firebase.json",

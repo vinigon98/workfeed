@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Radar Corp — Inteligência Ocupacional e Gestão de Riscos NR-1</title>
+  <meta name="description" content="Plataforma de inteligência organizacional e IA conversacional para escuta organizacional, coleta de sinais de risco psicossocial e apoio à governança da NR-1." />
+  
+  <!-- Fontes Corporativas (Inter) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            b2b: {
+              petrol: '#0F2A35',     // Azul petróleo corporativo (primário)
+              petrolLight: '#1F4E5F',// Azul corporativo médio
+              green: '#2F7D6D',      // Verde confiança (adequação e sucesso)
+              greenSuccess: '#027A48',// Verde sucesso/compliance
+              bg: '#F6F8FA',         // Cinza claro limpo para o fundo
+              text: '#334155',       // Cinza texto (alta leitura)
+              title: '#0F172A',      // Cinza quase preto para títulos
+              accent: '#D6A84F',     // Bronze de destaque
+              border: '#E2E8F0',     // Fronteiras suaves
+              danger: '#B42318',     // Vermelho de risco nos gráficos
+              warning: '#B7791F',    // Dourado de atenção nos gráficos
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #F6F8FA;
+      color: #334155;
+      font-family: 'Inter', sans-serif;
+    }
+    
+    .bg-grid-light {
+      background-size: 60px 60px;
+      background-image: 
+        linear-gradient(to right, rgba(15, 42, 53, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(15, 42, 53, 0.02) 1px, transparent 1px);
+    }
+    
+    .shadow-b2b {
+      box-shadow: 0 4px 20px -2px rgba(15, 42, 53, 0.05), 0 2px 8px -1px rgba(15, 42, 53, 0.03);
+    }
+
+    .shadow-b2b-lg {
+      box-shadow: 0 20px 25px -5px rgba(15, 42, 53, 0.08), 0 10px 10px -5px rgba(15, 42, 53, 0.04);
+    }
+
+    .step-active {
+      display: block;
+      animation: fadeIn 0.3s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .form-input {
+      transition: all 0.2s ease;
+    }
+
+    .form-input:focus {
+      border-color: #1F4E5F;
+      box-shadow: 0 0 0 3px rgba(31, 78, 95, 0.1);
+    }
+  </style>
+</head>
+<body class="bg-grid-light min-h-screen relative overflow-x-hidden selection:bg-b2b-petrol/10 selection:text-b2b-petrol">
+
+  <!-- Header -->
+  <header class="border-b border-b2b-border py-4 px-6 bg-white sticky top-0 z-50 shadow-sm">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <!-- Logo puramente tipográfico -->
+        <span class="font-bold text-lg tracking-tight text-b2b-title">RADAR <span class="text-b2b-petrolLight font-medium">CORP</span></span>
+      </div>
+      
+      <div class="hidden lg:flex items-center gap-8 text-xs font-semibold uppercase tracking-wider text-b2b-text">
+        <a href="#solucao" class="hover:text-b2b-petrol transition-colors">Como Funciona</a>
+        <a href="#video-demo" class="hover:text-b2b-petrol transition-colors">Demonstração</a>
+        <a href="#segmentos" class="hover:text-b2b-petrol transition-colors">Abordagem B2B</a>
+        <a href="#compliance" class="hover:text-b2b-petrol transition-colors">Suporte à NR-1</a>
+        <a href="#ativar" class="hover:text-b2b-petrol transition-colors">Ativar Plataforma</a>
+      </div>
+      
+      <a href="#leads-card" class="bg-b2b-petrol hover:bg-b2b-petrolLight text-white font-bold text-xs uppercase tracking-wider px-5 py-3 rounded transition-all shadow-sm">
+        Agendar Demonstração
+      </a>
+    </div>
+  </header>
+
+  <!-- Frase fixa de entendimento rápido comercial -->
+  <div class="bg-b2b-petrol text-white text-center text-xs font-bold py-2.5 uppercase tracking-wider">
+    WhatsApp + Inteligência Artificial + Indicadores por Setor + Relatórios Gerenciais de Apoio à NR-1
+  </div>
+
+  <!-- Hero Section -->
+  <section class="relative pt-12 pb-16 px-6 max-w-7xl mx-auto z-10">
+    <div class="grid lg:grid-cols-12 gap-12 items-start">
+      
+      <!-- Copy à esquerda (7 colunas) -->
+      <div class="lg:col-span-7 space-y-6">
+        <!-- Etiquetas visuais no hero (SVG ou tags limpas) -->
+        <div class="flex flex-wrap gap-2">
+          <span class="px-3 py-1 rounded bg-white border border-b2b-border text-xs text-slate-600 font-semibold shadow-sm">
+            Check-ins via WhatsApp
+          </span>
+          <span class="px-3 py-1 rounded bg-white border border-b2b-border text-xs text-slate-600 font-semibold shadow-sm">
+            Dados estatísticos consolidados
+          </span>
+          <span class="px-3 py-1 rounded bg-white border border-b2b-border text-xs text-slate-600 font-semibold shadow-sm">
+            Indicadores por setor
+          </span>
+          <span class="px-3 py-1 rounded bg-white border border-b2b-border text-xs text-slate-600 font-semibold shadow-sm">
+            Apoio à adequação da NR-1
+          </span>
+          <span class="px-3 py-1 rounded bg-white border border-b2b-border text-xs text-slate-600 font-semibold shadow-sm">
+            Relatórios executivos
+          </span>
+        </div>
+        
+        <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-b2b-title leading-tight">
+          IA via WhatsApp para apoiar a gestão de riscos psicossociais na NR-1
+        </h1>
+        
+        <p class="text-slate-600 text-lg leading-relaxed max-w-xl font-normal">
+          A Radar Corp transforma check-ins com colaboradores em sinais organizacionais, indicadores por setor e relatórios gerenciais para apoiar RH, SST e diretoria.
+        </p>
+
+        <!-- Selo de Governança B2B (hero_shield.png) -->
+        <div class="flex items-center gap-4 py-2 max-w-md bg-white border border-b2b-border rounded-lg p-3 shadow-sm">
+          <img src="./hero_shield.png" alt="Selo de Conformidade NR-1 e LGPD" class="w-14 h-14 object-contain shrink-0">
+          <div class="text-xs text-slate-500 leading-normal font-light">
+            <span class="font-bold text-b2b-title block">Proteção, Governança e Compliance</span>
+            Alinhamento integral com as diretrizes da NR-1 (GRO/PGR) e sob total segurança e anonimização LGPD.
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="#leads-card" class="bg-b2b-petrol hover:bg-b2b-petrolLight text-white font-bold text-sm px-6 py-4 rounded text-center transition-all shadow-sm">
+            Agendar demonstração
+          </a>
+          <a href="#video-demo" class="bg-white border border-b2b-border hover:border-slate-300 text-b2b-text font-bold text-sm px-6 py-4 rounded text-center transition-all shadow-sm">
+            Visualizar demonstração
+          </a>
+        </div>
+
+        <!-- Bloco "Entenda em 10 segundos" (Sem Emojis, com SVGs limpos) -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 pt-6 border-t border-b2b-border" id="como-funciona">
+          <div class="bg-white border border-b2b-border rounded-lg p-4 text-center shadow-sm flex flex-col items-center">
+            <div class="w-8 h-8 text-b2b-petrol mb-2">
+              <!-- Balão de mensagem SVG -->
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="w-full h-full">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+              </svg>
+            </div>
+            <p class="text-xs font-bold text-b2b-title">1. WhatsApp</p>
+            <p class="text-[10px] text-slate-500 mt-1 leading-relaxed">Check-ins rápidos com colaboradores</p>
+          </div>
+
+          <div class="bg-white border border-b2b-border rounded-lg p-4 text-center shadow-sm flex flex-col items-center">
+            <div class="w-8 h-8 text-b2b-petrol mb-2">
+              <!-- Circuit/Node SVG -->
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="w-full h-full">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/>
+              </svg>
+            </div>
+            <p class="text-xs font-bold text-b2b-title">2. Inteligência Artificial</p>
+            <p class="text-[10px] text-slate-500 mt-1 leading-relaxed">Classificação automática de sinais</p>
+          </div>
+
+          <div class="bg-white border border-b2b-border rounded-lg p-4 text-center shadow-sm flex flex-col items-center">
+            <div class="w-8 h-8 text-b2b-petrol mb-2">
+              <!-- Gráfico de barras SVG -->
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="w-full h-full">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10a2 2 0 01-2 2h-2a2 2 0 01-2-2zm9 0v-9a2 2 0 00-2-2h-2a2 2 0 00-2 2v9a2 2 0 002 2h2a2 2 0 002-2z"/>
+              </svg>
+            </div>
+            <p class="text-xs font-bold text-b2b-title">3. Indicadores</p>
+            <p class="text-[10px] text-slate-500 mt-1 leading-relaxed">Visão consolidada por setor</p>
+          </div>
+
+          <div class="bg-white border border-b2b-border rounded-lg p-4 text-center shadow-sm flex flex-col items-center">
+            <div class="w-8 h-8 text-b2b-petrol mb-2">
+              <!-- Documento SVG -->
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="w-full h-full">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+              </svg>
+            </div>
+            <p class="text-xs font-bold text-b2b-title">4. Relatórios</p>
+            <p class="text-[10px] text-slate-500 mt-1 leading-relaxed">Apoio à decisão e documentação</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Container do Questionário Corporativo à direita (5 colunas) -->
+      <div class="lg:col-span-5 relative" id="leads-card">
+        <div class="relative bg-white border border-b2b-border rounded-lg p-6 sm:p-8 shadow-b2b-lg">
+          
+          <!-- Progresso -->
+          <div class="mb-6">
+            <div class="flex justify-between items-center text-xs text-slate-400 mb-2">
+              <span class="font-bold tracking-wider uppercase text-[10px]" id="step-label">Passo 1 de 5</span>
+              <span id="step-percentage" class="text-b2b-petrolLight font-bold">20%</span>
+            </div>
+            <div class="h-1 w-full bg-slate-100 rounded-full overflow-hidden">
+              <div id="progress-bar" class="h-full bg-b2b-petrol w-1/5 transition-all duration-300"></div>
+            </div>
+          </div>
+
+          <!-- FORMULÁRIO -->
+          <form id="LP-questionnaire" onsubmit="event.preventDefault();">
+            
+            <!-- PASSO 1 -->
+            <div id="q-step-1" class="step-active space-y-6">
+              <h3 class="text-base font-bold text-b2b-title">Solicite uma apresentação da Radar Corp</h3>
+              <div class="space-y-4">
+                <div>
+                  <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5" for="q-empresa">Nome da Empresa</label>
+                  <input type="text" id="q-empresa" placeholder="Ex: Acme S.A." class="w-full bg-white border border-b2b-border rounded px-4 py-3 text-sm focus:outline-none focus:border-b2b-petrol text-b2b-title form-input">
+                </div>
+                <div>
+                  <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Número aproximado de colaboradores</label>
+                  <div class="grid grid-cols-2 gap-2">
+                    <button type="button" onclick="selectColab('1-20', this)" class="colab-opt py-3 px-4 rounded border border-b2b-border bg-white text-xs text-slate-600 hover:border-b2b-petrolLight/40 transition-all font-semibold">1 a 20</button>
+                    <button type="button" onclick="selectColab('21-100', this)" class="colab-opt py-3 px-4 rounded border border-b2b-border bg-white text-xs text-slate-600 hover:border-b2b-petrolLight/40 transition-all font-semibold">21 a 100</button>
+                    <button type="button" onclick="selectColab('101-500', this)" class="colab-opt py-3 px-4 rounded border border-b2b-border bg-white text-xs text-slate-600 hover:border-b2b-petrolLight/40 transition-all font-semibold">101 a 500</button>
+                    <button type="button" onclick="selectColab('500+', this)" class="colab-opt py-3 px-4 rounded border border-b2b-border bg-white text-xs text-slate-600 hover:border-b2b-petrolLight/40 transition-all font-semibold">500+</button>
+                  </div>
+                </div>
+              </div>
+              <button type="button" onclick="nextStep(2)" class="w-full bg-b2b-petrol hover:bg-b2b-petrolLight text-white font-bold py-4 rounded text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-sm">
+                Avançar
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+              </button>
+            </div>
+
+            <!-- PASSO 2 -->
+            <div id="q-step-2" class="hidden space-y-6">
+              <h3 class="text-base font-bold text-b2b-title">Qual o seu principal interesse na solução?</h3>
+              <div class="space-y-3">
+                <button type="button" onclick="selectConcern('Preparação para NR-1', this)" class="concern-opt w-full text-left p-4 rounded border border-b2b-border bg-white text-xs text-slate-600 hover:border-b2b-petrolLight/40 transition-all flex items-center gap-3">
+                  <span class="w-1.5 h-1.5 rounded-full bg-b2b-petrol"></span>
+                  <span>Preparação regulatória para NR-1</span>
+                </button>
+                <button type="button" onclick="selectConcern('Mapear riscos por setor', this)" class="concern-opt w-full text-left p-4 rounded border border-b2b-border bg-white text-xs text-slate-600 hover:border-b2b-petrolLight/40 transition-all flex items-center gap-3">
+                  <span class="w-1.5 h-1.5 rounded-full bg-b2b-petrol"></span>
+                  <span>Mapear riscos e estressores por setor</span>
+                </button>
+                <button type="button" onclick="selectConcern('Reduzir conflitos e sobrecarga', this)" class="concern-opt w-full text-left p-4 rounded border border-b2b-border bg-white text-xs text-slate-600 hover:border-b2b-petrolLight/40 transition-all flex items-center gap-3">
+                  <span class="w-1.5 h-1.5 rounded-full bg-b2b-petrol"></span>
+                  <span>Reduzir conflitos internos e sobrecarga operacional</span>
+                </button>
+                <button type="button" onclick="selectConcern('Apoiar RH/SST com dados', this)" class="concern-opt w-full text-left p-4 rounded border border-b2b-border bg-white text-xs text-slate-600 hover:border-b2b-petrolLight/40 transition-all flex items-center gap-3">
+                  <span class="w-1.5 h-1.5 rounded-full bg-b2b-petrol"></span>
+                  <span>Apoiar RH e SST com dados e relatórios gerenciais</span>
+                </button>
+                <button type="button" onclick="selectConcern('Agendar demonstração técnica', this)" class="concern-opt w-full text-left p-4 rounded border border-b2b-border bg-white text-xs text-slate-600 hover:border-b2b-petrolLight/40 transition-all flex items-center gap-3">
+                  <span class="w-1.5 h-1.5 rounded-full bg-b2b-petrol"></span>
+                  <span>Agendar demonstração técnica detalhada</span>
+                </button>
+              </div>
+              <div class="flex gap-3">
+                <button type="button" onclick="prevStep(1)" class="w-1/3 border border-b2b-border text-slate-500 hover:text-slate-800 py-4 rounded text-xs font-bold uppercase tracking-wider transition-all">Voltar</button>
+                <button type="button" onclick="nextStep(3)" class="w-2/3 bg-b2b-petrol hover:bg-b2b-petrolLight text-white font-bold py-4 rounded text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2">
+                  Avançar
+                  <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- PASSO 3 -->
+            <div id="q-step-3" class="hidden space-y-6">
+              <h3 class="text-base font-bold text-b2b-title">Qual o seu cargo ou função de decisão na empresa?</h3>
+              <div class="grid grid-cols-2 gap-2">
+                <button type="button" onclick="selectCargo('Diretoria / Gerência de RH', this)" class="cargo-opt p-4 rounded border border-b2b-border bg-white text-xs text-slate-600 hover:border-b2b-petrolLight/40 transition-all font-semibold text-center flex flex-col items-center gap-2 justify-center">
+                  <span class="text-sm font-bold text-b2b-title">Recursos Humanos</span>
+                  <span class="text-[10px] text-slate-500">Diretoria / Gerência</span>
+                </button>
+                <button type="button" onclick="selectCargo('CEO / Sócio / Diretor Geral', this)" class="cargo-opt p-4 rounded border border-b2b-border bg-white text-xs text-slate-600 hover:border-b2b-petrolLight/40 transition-all font-semibold text-center flex flex-col items-center gap-2 justify-center">
+                  <span class="text-sm font-bold text-b2b-title">Diretoria Geral</span>
+                  <span class="text-[10px] text-slate-500">CEO / Sócio / Diretor</span>
+                </button>
+                <button type="button" onclick="selectCargo('Profissional de SST / SESMT', this)" class="cargo-opt p-4 rounded border border-b2b-border bg-white text-xs text-slate-600 hover:border-b2b-petrolLight/40 transition-all font-semibold text-center flex flex-col items-center gap-2 justify-center">
+                  <span class="text-sm font-bold text-b2b-title">SST / Segurança</span>
+                  <span class="text-[10px] text-slate-500">Engenheiro / Técnico</span>
+                </button>
+                <button type="button" onclick="selectCargo('Outras Posições', this)" class="cargo-opt p-4 rounded border border-b2b-border bg-white text-xs text-slate-600 hover:border-b2b-petrolLight/40 transition-all font-semibold text-center flex flex-col items-center gap-2 justify-center">
+                  <span class="text-sm font-bold text-b2b-title">Outras Funções</span>
+                  <span class="text-[10px] text-slate-500">Cargo de gestão</span>
+                </button>
+              </div>
+              <div class="flex gap-3">
+                <button type="button" onclick="prevStep(2)" class="w-1/3 border border-b2b-border text-slate-500 hover:text-slate-800 py-4 rounded text-xs font-bold uppercase tracking-wider transition-all">Voltar</button>
+                <button type="button" onclick="nextStep(4)" class="w-2/3 bg-b2b-petrol hover:bg-b2b-petrolLight text-white font-bold py-4 rounded text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2">
+                  Avançar
+                  <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- PASSO 4 -->
+            <div id="q-step-4" class="hidden space-y-6">
+              <h3 class="text-base font-bold text-b2b-title">Quem é o responsável corporativo e seu e-mail?</h3>
+              <div class="space-y-4">
+                <div>
+                  <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5" for="q-nome">Nome Completo</label>
+                  <input type="text" id="q-nome" placeholder="Ex: Roberto Ramos" class="w-full bg-white border border-b2b-border rounded px-4 py-3 text-sm focus:outline-none focus:border-b2b-petrol text-b2b-title form-input">
+                </div>
+                <div>
+                  <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5" for="q-email">E-mail Corporativo</label>
+                  <input type="email" id="q-email" placeholder="Ex: roberto.ramos@suaempresa.com.br" class="w-full bg-white border border-b2b-border rounded px-4 py-3 text-sm focus:outline-none focus:border-b2b-petrol text-b2b-title form-input">
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <button type="button" onclick="prevStep(3)" class="w-1/3 border border-b2b-border text-slate-500 hover:text-slate-800 py-4 rounded text-xs font-bold uppercase tracking-wider transition-all">Voltar</button>
+                <button type="button" onclick="nextStep(5)" class="w-2/3 bg-b2b-petrol hover:bg-b2b-petrolLight text-white font-bold py-4 rounded text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2">
+                  Avançar
+                  <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- PASSO 5 -->
+            <div id="q-step-5" class="hidden space-y-6">
+              <h3 class="text-base font-bold text-b2b-title">Por fim, qual o WhatsApp Corporativo para contato?</h3>
+              <div class="space-y-4">
+                <div>
+                  <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5" for="q-whatsapp">WhatsApp Corporativo (com DDD)</label>
+                  <input type="tel" id="q-whatsapp" placeholder="(11) 99999-9999" class="w-full bg-white border border-b2b-border rounded px-4 py-3 text-sm focus:outline-none focus:border-b2b-petrol text-b2b-title form-input" oninput="maskPhone(this)" maxlength="15">
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <button type="button" onclick="prevStep(4)" class="w-1/3 border border-b2b-border text-slate-500 hover:text-slate-800 py-4 rounded text-xs font-bold uppercase tracking-wider transition-all">Voltar</button>
+                <button type="button" onclick="submitLP()" class="w-2/3 bg-b2b-petrol hover:bg-b2b-petrolLight text-white font-bold py-4 rounded text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2">
+                  <span>Receber proposta de ativação</span>
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                </button>
+              </div>
+              
+              <!-- Termos de Privacidade sem Emojis com ícone SVG de escudo -->
+              <div class="flex items-center gap-2 justify-center mt-4 text-[10px] text-slate-400 font-light">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="w-3.5 h-3.5 text-slate-400">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.952 11.952 0 01-7.618 3.033A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                </svg>
+                <span>Dados seguros sob controles de privacidade rígidos e LGPD.</span>
+              </div>
+            </div>
+
+            <!-- PASSO DE SUCESSO -->
+            <div id="q-step-success" class="hidden text-center space-y-6 py-8">
+              <div class="w-12 h-12 bg-b2b-green/10 border border-b2b-green/20 rounded-full flex items-center justify-center mx-auto text-b2b-greenSuccess">
+                <svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <div>
+                <h3 class="text-lg font-bold text-b2b-title mb-2">Solicitação Recebida!</h3>
+                <p class="text-slate-500 text-sm leading-relaxed">
+                  Agradecemos seu contato, <span id="resp-nome" class="text-b2b-title font-semibold">Gestor</span>. Registramos o interesse da sua organização na Radar Corp. 
+                </p>
+              </div>
+              <div class="p-4 bg-slate-50 rounded border border-b2b-border text-xs text-left">
+                <p class="text-slate-600 font-light leading-relaxed">
+                  <strong class="text-b2b-petrol">Próximo Passo:</strong> Em breve nosso consultor comercial entrará em contato para agendar a demonstração técnica e ativação da Radar Corp na sua empresa.
+                </p>
+              </div>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Seção 2: Entenda em 10 Segundos - Fluxo Horizontal (Puro B2B sem emojis) -->
+  <section class="max-w-7xl mx-auto px-6 py-6">
+    <div class="bg-white border border-b2b-border rounded-xl p-6 shadow-sm">
+      <div class="grid md:grid-cols-7 gap-4 items-center text-center">
+        
+        <div class="flex flex-col items-center">
+          <div class="w-10 h-10 text-b2b-petrol mb-1">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="w-full h-full">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+            </svg>
+          </div>
+          <p class="text-xs font-bold text-b2b-title">1. Resposta</p>
+          <p class="text-[10px] text-slate-500 mt-0.5">Colaborador responde pelo WhatsApp</p>
+        </div>
+        
+        <div class="hidden md:flex justify-center text-slate-300">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </div>
+        
+        <div class="flex flex-col items-center">
+          <div class="w-10 h-10 text-b2b-petrol mb-1">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="w-full h-full">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+            </svg>
+          </div>
+          <p class="text-xs font-bold text-b2b-title">2. Classificação</p>
+          <p class="text-[10px] text-slate-500 mt-0.5">IA organiza e anonimiza sinais</p>
+        </div>
+        
+        <div class="hidden md:flex justify-center text-slate-300">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </div>
+        
+        <div class="flex flex-col items-center">
+          <div class="w-10 h-10 text-b2b-petrol mb-1">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="w-full h-full">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M11 3.055A9.003 9.003 0 1020.945 13H11V3.055z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"/>
+            </svg>
+          </div>
+          <p class="text-xs font-bold text-b2b-title">3. Indicadores</p>
+          <p class="text-[10px] text-slate-500 mt-0.5">RH e SST veem riscos por setor</p>
+        </div>
+        
+        <div class="hidden md:flex justify-center text-slate-300">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </div>
+
+        <div class="flex flex-col items-center">
+          <div class="w-10 h-10 text-b2b-petrol mb-1">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="w-full h-full">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <p class="text-xs font-bold text-b2b-title">4. Ação</p>
+          <p class="text-[10px] text-slate-500 mt-0.5">Gestão age antes do risco crescer</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Seção 3: Demonstração Visual das Interfaces -->
+  <section class="py-16 px-6 max-w-7xl mx-auto border-t border-b2b-border" id="video-demo">
+    <div class="space-y-12">
+      <div class="text-center max-w-3xl mx-auto space-y-4">
+        <span class="text-xs text-b2b-petrolLight font-bold uppercase tracking-widest font-mono block">Demonstração Visual</span>
+        <h2 class="text-3xl font-extrabold text-b2b-title leading-tight">O ecossistema Radar Corp em detalhes</h2>
+        <p class="text-slate-600 text-sm leading-relaxed max-w-2xl mx-auto font-light">
+          Veja a simplicidade da jornada do colaborador no WhatsApp unida ao poder analítico e de compliance do Painel Gerencial corporativo.
+        </p>
+      </div>
+
+      <!-- Grid Lado a Lado (WhatsApp vs Dashboard) -->
+      <div class="grid lg:grid-cols-12 gap-8 items-stretch">
+        
+        <!-- Coluna 1: WhatsApp Mockup (5 colunas) -->
+        <div class="lg:col-span-5 bg-white border border-b2b-border rounded-2xl p-6 shadow-b2b flex flex-col justify-between hover:border-b2b-petrol/20 transition-all duration-300">
+          <div class="space-y-4 mb-6">
+            <div class="flex items-center gap-3">
+              <span class="w-8 h-8 rounded-full bg-b2b-green/10 flex items-center justify-center text-b2b-greenSuccess">
+                <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" class="w-4 h-4">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 10.742h.01m5.624 0h.01M12.33 13.916h.01m4.354-9.35A10.55 10.55 0 0012 3c-5.798 0-10.5 4.702-10.5 10.5 0 1.947.53 3.766 1.455 5.334L1.5 22.5l3.824-1.455A10.505 10.505 0 0012 24c5.798 0 10.5-4.702 10.5-10.5 0-5.798-4.702-10.5-10.5-10.5z"/>
+                </svg>
+              </span>
+              <div>
+                <h3 class="font-bold text-sm text-b2b-title">Check-in via WhatsApp</h3>
+                <p class="text-[10px] text-slate-400">Escuta Ocupacional de Alta Adesão</p>
+              </div>
+            </div>
+            <p class="text-xs text-slate-500 leading-relaxed font-light">
+              Uma conversa natural, voluntária e anônima de 2 minutos. O colaborador responde sem precisar baixar aplicativos ou criar logins complexos.
+            </p>
+          </div>
+          
+          <!-- Imagem do Mockup do Celular com Efeitos de Profundidade -->
+          <div class="bg-b2b-bg rounded-xl p-4 border border-b2b-border overflow-hidden group flex items-center justify-center">
+            <img src="./whatsapp_mockup.png" alt="Simulação de conversa de check-in ocupacional no WhatsApp" class="rounded-lg shadow-md max-h-[360px] object-contain group-hover:scale-[1.02] transition-all duration-500">
+          </div>
+        </div>
+
+        <!-- Coluna 2: Dashboard Mockup (7 colunas) -->
+        <div class="lg:col-span-7 bg-white border border-b2b-border rounded-2xl p-6 shadow-b2b flex flex-col justify-between hover:border-b2b-petrol/20 transition-all duration-300">
+          <div class="space-y-4 mb-6">
+            <div class="flex items-center gap-3">
+              <span class="w-8 h-8 rounded-full bg-b2b-petrol/5 flex items-center justify-center text-b2b-petrolLight">
+                <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" class="w-4 h-4">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10a2 2 0 01-2 2h-2a2 2 0 01-2-2zm9 0v-9a2 2 0 00-2-2h-2a2 2 0 00-2 2v9a2 2 0 002 2h2a2 2 0 002-2z"/>
+                </svg>
+              </span>
+              <div>
+                <h3 class="font-bold text-sm text-b2b-title">Painel Corporativo Radar Corp</h3>
+                <p class="text-[10px] text-slate-400">Indicadores Estruturados por Setor e Período</p>
+              </div>
+            </div>
+            <p class="text-xs text-slate-500 leading-relaxed font-light">
+              Visão consolidada para RH e SST. Acompanhe a média de estresse, tendências de engajamento voluntário e dados agregados respeitando os requisitos da LGPD.
+            </p>
+          </div>
+          
+          <!-- Imagem do Mockup do Dashboard Desktop com Moldura Premium -->
+          <div class="bg-b2b-bg rounded-xl p-3 border border-b2b-border overflow-hidden group flex items-center justify-center">
+            <img src="./dashboard_preview.png" alt="Painel Gerencial Radar Corp com indicadores ocupacionais e gráficos de estresse" class="rounded-lg shadow-md max-h-[360px] w-full object-cover object-top group-hover:scale-[1.01] transition-all duration-500">
+          </div>
+        </div>
+
+      </div>
+
+      <div class="text-center">
+        <p class="text-[11px] text-slate-400 font-light max-w-lg mx-auto">
+          * Imagens reais de simulação da interface da plataforma. O fluxo final de perguntas e os agrupamentos de setores são personalizados conforme o porte e necessidade da sua organização.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seção 4: Problema (Antes vs Depois) -->
+  <section class="py-16 px-6 max-w-7xl mx-auto border-t border-b2b-border">
+    <div class="text-center max-w-3xl mx-auto mb-12">
+      <span class="text-xs text-b2b-petrolLight font-bold uppercase tracking-widest block font-mono">Governança & Riscos</span>
+      <h2 class="text-3xl font-extrabold text-b2b-title mt-2">O risco psicossocial normalmente aparece tarde demais</h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-8">
+      
+      <!-- Antes (Sem processo estruturado) -->
+      <div class="border border-red-500/20 bg-red-500/5 rounded-xl p-8 shadow-sm flex flex-col justify-between">
+        <div>
+          <h3 class="text-b2b-danger font-bold text-lg mb-6 flex items-center gap-3">
+            <div class="w-6 h-6 text-b2b-danger">
+              <!-- X SVG -->
+              <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" class="w-full h-full">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </div>
+            <span>Antes: Sem processo estruturado</span>
+          </h3>
+          
+          <ul class="space-y-4 text-sm text-slate-600 font-light">
+            <li class="flex items-start gap-3">
+              <svg class="w-4 h-4 text-b2b-danger mt-1 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+              <span>O RH depende apenas de feedbacks dispersos e reclamações reativas de gestores</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-4 h-4 text-b2b-danger mt-1 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+              <span>A empresa não enxerga padrões de sobrecarga por equipe até que vire absenteísmo grave</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-4 h-4 text-b2b-danger mt-1 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+              <span>Dados organizacionais ficam desorganizados e fragmentados em planilhas ou conversas soltas</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-4 h-4 text-b2b-danger mt-1 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+              <span>Inexistência técnica de registros para comprovar boa-fé preventiva e acompanhamento regular</span>
+            </li>
+          </ul>
+        </div>
+        <div class="pt-8 text-center text-xs font-semibold text-b2b-danger uppercase tracking-wider">Ausência de Indicadores de Gestão</div>
+      </div>
+
+      <!-- Depois (Com Radar Corp) -->
+      <div class="border border-emerald-500/20 bg-emerald-500/5 rounded-xl p-8 shadow-sm flex flex-col justify-between">
+        <div>
+          <h3 class="text-b2b-greenSuccess font-bold text-lg mb-6 flex items-center gap-3">
+            <div class="w-6 h-6 text-b2b-greenSuccess">
+              <!-- Check SVG -->
+              <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" class="w-full h-full">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+              </svg>
+            </div>
+            <span>Depois: Com a Radar Corp</span>
+          </h3>
+          
+          <ul class="space-y-4 text-sm text-slate-600 font-light">
+            <li class="flex items-start gap-3">
+              <svg class="w-4 h-4 text-b2b-greenSuccess mt-1 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              <span>Rotina automatizada e voluntária de escuta contínua pelo WhatsApp, sem instalar nada</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-4 h-4 text-b2b-greenSuccess mt-1 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              <span>Estressores organizacionais mapeados e sinalizados por setor com clareza objetiva</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-4 h-4 text-b2b-greenSuccess mt-1 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              <span>Informações consolidadas em painel gerencial moderno e relatórios executivos estruturados</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-4 h-4 text-b2b-greenSuccess mt-1 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              <span>Geração robusta de evidências históricas de prevenção para apoiar a adequação da NR-1</span>
+            </li>
+          </ul>
+        </div>
+        <div class="pt-8 text-center text-xs font-semibold text-b2b-greenSuccess uppercase tracking-wider">Tomada de Decisão baseada em Dados</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Seção 5: Para Quem É -->
+  <section class="py-16 px-6 max-w-7xl mx-auto border-t border-b2b-border" id="segmentos">
+    <div class="text-center max-w-3xl mx-auto mb-12">
+      <span class="text-xs text-b2b-petrolLight font-bold uppercase tracking-widest block font-mono">Gatilhos & Segmentação</span>
+      <h2 class="text-3xl font-extrabold text-b2b-title mt-2">A quem a solução se destina?</h2>
+    </div>
+
+    <!-- Grid de Perfis B2B -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      
+      <!-- Pequenas Empresas -->
+      <div class="bg-white border border-b2b-border rounded-lg p-6 flex flex-col justify-between shadow-sm">
+        <div class="space-y-4">
+          <span class="px-2 py-0.5 text-[9px] font-bold text-b2b-petrolLight bg-b2b-petrol/5 rounded border border-b2b-border inline-block uppercase">Pequenas Empresas</span>
+          <h3 class="font-bold text-lg text-b2b-title">Comece de forma simples</h3>
+          <p class="text-slate-600 text-xs leading-relaxed font-light">
+            Para pequenas empresas que precisam se preparar para a NR-1 sem criar uma estrutura pesada ou onerosa de RH e SST.
+          </p>
+          <div class="pt-2 border-t border-slate-100 space-y-1.5">
+            <div class="flex items-center gap-2 text-[10px] text-slate-500 font-light">
+              <svg class="w-3.5 h-3.5 text-b2b-greenSuccess" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              <span>Sem aplicativo novo para instalar</span>
+            </div>
+            <div class="flex items-center gap-2 text-[10px] text-slate-500 font-light">
+              <svg class="w-3.5 h-3.5 text-b2b-greenSuccess" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              <span>Sem necessidade de login ou senha</span>
+            </div>
+            <div class="flex items-center gap-2 text-[10px] text-slate-500 font-light">
+              <svg class="w-3.5 h-3.5 text-b2b-greenSuccess" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              <span>Check-ins intuitivos pelo WhatsApp</span>
+            </div>
+          </div>
+        </div>
+        <a href="#leads-card" class="mt-6 bg-b2b-petrol hover:bg-b2b-petrolLight text-white font-bold py-3 text-center rounded text-[10px] uppercase tracking-wider block transition-all shadow-sm">
+          Quero começar de forma simples
+        </a>
+      </div>
+
+      <!-- Médias Empresas -->
+      <div class="bg-white border border-b2b-border rounded-lg p-6 flex flex-col justify-between shadow-sm">
+        <div class="space-y-4">
+          <span class="px-2 py-0.5 text-[9px] font-bold text-b2b-petrolLight bg-b2b-petrol/5 rounded border border-b2b-border inline-block uppercase">Médias Empresas</span>
+          <h3 class="font-bold text-lg text-b2b-title">Mapeie setores em atenção</h3>
+          <p class="text-slate-600 text-xs leading-relaxed font-light">
+            Para empresas em crescimento que precisam enxergar de antemão sinais de sobrecarga, conflitos e falhas de comunicação por setores específicos.
+          </p>
+          <div class="pt-2 border-t border-slate-100 space-y-1.5">
+            <div class="flex items-center gap-2 text-[10px] text-slate-500 font-light">
+              <svg class="w-3.5 h-3.5 text-b2b-greenSuccess" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              <span>Comparação detalhada por setor</span>
+            </div>
+            <div class="flex items-center gap-2 text-[10px] text-slate-500 font-light">
+              <svg class="w-3.5 h-3.5 text-b2b-greenSuccess" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              <span>Acompanhamento de tendência temporal</span>
+            </div>
+            <div class="flex items-center gap-2 text-[10px] text-slate-500 font-light">
+              <svg class="w-3.5 h-3.5 text-b2b-greenSuccess" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              <span>Alertas preventivos e ágeis de estresse</span>
+            </div>
+          </div>
+        </div>
+        <a href="#leads-card" class="mt-6 bg-b2b-petrol hover:bg-b2b-petrolLight text-white font-bold py-3 text-center rounded text-[10px] uppercase tracking-wider block transition-all shadow-sm">
+          Quero mapear meus setores
+        </a>
+      </div>
+
+      <!-- Grandes Empresas -->
+      <div class="bg-white border border-b2b-border rounded-lg p-6 flex flex-col justify-between shadow-sm">
+        <div class="space-y-4">
+          <span class="px-2 py-0.5 text-[9px] font-bold text-b2b-petrolLight bg-b2b-petrol/5 rounded border border-b2b-border inline-block uppercase">Grandes Empresas</span>
+          <h3 class="font-bold text-lg text-b2b-title">Padronização & Escala</h3>
+          <p class="text-slate-600 text-xs leading-relaxed font-light">
+            Para empresas com múltiplas áreas, filiais ou unidades que necessitam estruturar uma rotina de escuta robusta com dados consolidados e rastreabilidade total.
+          </p>
+          <div class="pt-2 border-t border-slate-100 space-y-1.5">
+            <div class="flex items-center gap-2 text-[10px] text-slate-500 font-light">
+              <svg class="w-3.5 h-3.5 text-b2b-greenSuccess" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              <span>Visão por múltiplas unidades</span>
+            </div>
+            <div class="flex items-center gap-2 text-[10px] text-slate-500 font-light">
+              <svg class="w-3.5 h-3.5 text-b2b-greenSuccess" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              <span>Agrupamentos mínimos para LGPD</span>
+            </div>
+            <div class="flex items-center gap-2 text-[10px] text-slate-500 font-light">
+              <svg class="w-3.5 h-3.5 text-b2b-greenSuccess" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              <span>Controle de acessos de acordo com perfis</span>
+            </div>
+          </div>
+        </div>
+        <a href="#leads-card" class="mt-6 bg-b2b-petrol hover:bg-b2b-petrolLight text-white font-bold py-3 text-center rounded text-[10px] uppercase tracking-wider block transition-all shadow-sm">
+          Agendar apresentação executiva
+        </a>
+      </div>
+
+      <!-- RH -->
+      <div class="bg-white border border-b2b-border rounded-lg p-6 flex flex-col justify-between shadow-sm">
+        <div class="space-y-4">
+          <span class="px-2 py-0.5 text-[9px] font-bold text-b2b-petrolLight bg-b2b-petrol/5 rounded border border-b2b-border inline-block uppercase">Recursos Humanos</span>
+          <h3 class="font-bold text-lg text-b2b-title">Transforme feedbacks em ação</h3>
+          <p class="text-slate-600 text-xs leading-relaxed font-light">
+            A Radar Corp ajuda o RH a acompanhar sinais estruturados de sobrecarga, clareza de função, suporte social e percepção de apoio por setores.
+          </p>
+        </div>
+        <a href="#leads-card" class="mt-6 bg-white border border-b2b-border hover:border-slate-300 text-b2b-text font-bold py-3 text-center rounded text-[10px] uppercase tracking-wider block transition-all">
+          Ver proposta para RH
+        </a>
+      </div>
+
+      <!-- SST -->
+      <div class="bg-white border border-b2b-border rounded-lg p-6 flex flex-col justify-between shadow-sm">
+        <div class="space-y-4">
+          <span class="px-2 py-0.5 text-[9px] font-bold text-b2b-petrolLight bg-b2b-petrol/5 rounded border border-b2b-border inline-block uppercase">SST / SESMT</span>
+          <h3 class="font-bold text-lg text-b2b-title">Apoio técnico para o GRO</h3>
+          <p class="text-slate-600 text-xs leading-relaxed font-light">
+            Organize os sinais de estressores psicossociais ligados à organização do trabalho em relatórios estatísticos consistentes para apoiar seu PGR e GRO.
+          </p>
+        </div>
+        <a href="#leads-card" class="mt-6 bg-white border border-b2b-border hover:border-slate-300 text-b2b-text font-bold py-3 text-center rounded text-[10px] uppercase tracking-wider block transition-all">
+          Ver proposta para SST
+        </a>
+      </div>
+
+      <!-- Diretoria -->
+      <div class="bg-white border border-b2b-border rounded-lg p-6 flex flex-col justify-between shadow-sm">
+        <div class="space-y-4">
+          <span class="px-2 py-0.5 text-[9px] font-bold text-b2b-petrolLight bg-b2b-petrol/5 rounded border border-b2b-border inline-block uppercase">Diretoria Executiva</span>
+          <h3 class="font-bold text-lg text-b2b-title">Visão rápida e gerencial</h3>
+          <p class="text-slate-600 text-xs leading-relaxed font-light">
+            Monitore tendências humanas de exposição operacional com um painel consolidador objetivo por setor, unidade e período de campanhas.
+          </p>
+        </div>
+        <a href="#leads-card" class="mt-6 bg-white border border-b2b-border hover:border-slate-300 text-b2b-text font-bold py-3 text-center rounded text-[10px] uppercase tracking-wider block transition-all">
+          Receber apresentação executiva
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Seção 6: O que a Empresa Recebe -->
+  <section class="py-16 px-6 max-w-7xl mx-auto border-t border-b2b-border" id="solucao">
+    <div class="text-center max-w-3xl mx-auto mb-12">
+      <span class="text-xs text-b2b-petrolLight font-bold uppercase tracking-widest block font-mono">Entregas da Plataforma</span>
+      <h2 class="text-3xl font-extrabold text-b2b-title mt-3">O que sua empresa recebe com a Radar Corp</h2>
+      <p class="text-slate-600 text-sm font-light mt-2">Nossos consultores acompanham toda a jornada de implantação e ativação da Radar Corp na sua organização.</p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      
+      <!-- Entrega 1 -->
+      <div class="bg-white border border-b2b-border rounded-lg p-6 shadow-sm flex flex-col items-start space-y-3">
+        <div class="w-10 h-10 text-b2b-petrol">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="w-full h-full">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+          </svg>
+        </div>
+        <h3 class="font-bold text-slate-800 text-sm">1. Estruturação dos setores</h3>
+        <p class="text-slate-600 text-xs leading-relaxed font-light">
+          Configuramos os grupos de trabalho, setores operacionais e unidades geográficas para consolidação adequada dos dados.
+        </p>
+      </div>
+
+      <!-- Entrega 2 -->
+      <div class="bg-white border border-b2b-border rounded-lg p-6 shadow-sm flex flex-col items-start space-y-3">
+        <div class="w-10 h-10 text-b2b-petrol">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="w-full h-full">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+          </svg>
+        </div>
+        <h3 class="font-bold text-slate-800 text-sm">2. Roteiro pelo WhatsApp</h3>
+        <p class="text-slate-600 text-xs leading-relaxed font-light">
+          Desenho e parametrização da trilha conversacional contendo perguntas objetivas sobre clima e sobrecarga no trabalho.
+        </p>
+      </div>
+
+      <!-- Entrega 3 -->
+      <div class="bg-white border border-b2b-border rounded-lg p-6 shadow-sm flex flex-col items-start space-y-3">
+        <div class="w-10 h-10 text-b2b-petrol">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="w-full h-full">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+        </div>
+        <h3 class="font-bold text-slate-800 text-sm">3. Classificação dos sinais por IA</h3>
+        <p class="text-slate-600 text-xs leading-relaxed font-light">
+          Os depoimentos dos colaboradores são analisados de forma voluntária e consolidada por modelos de inteligência artificial de leitura anônima.
+        </p>
+      </div>
+
+      <!-- Entrega 4 -->
+      <div class="bg-white border border-b2b-border rounded-lg p-6 shadow-sm flex flex-col items-start space-y-3">
+        <div class="w-10 h-10 text-b2b-petrol">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="w-full h-full">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 2v-6m-9 9h12a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+          </svg>
+        </div>
+        <h3 class="font-bold text-slate-800 text-sm">4. Relatório gerencial consolidado</h3>
+        <p class="text-slate-600 text-xs leading-relaxed font-light">
+          Geração periódica de relatórios estatísticos consolidados demonstrando a percepção de riscos de estresse e sobrecarga.
+        </p>
+      </div>
+
+      <!-- Entrega 5 -->
+      <div class="bg-white border border-b2b-border rounded-lg p-6 shadow-sm flex flex-col items-start space-y-3">
+        <div class="w-10 h-10 text-b2b-petrol">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="w-full h-full">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+          </svg>
+        </div>
+        <h3 class="font-bold text-slate-800 text-sm">5. Recomendações de plano de ação</h3>
+        <p class="text-slate-600 text-xs leading-relaxed font-light">
+          Diretrizes e insights estratégicos para guiar intervenções de melhorias baseadas nas maiores dores organizacionais reveladas pelo painel.
+        </p>
+      </div>
+
+      <!-- Entrega 6 -->
+      <div class="bg-white border border-b2b-border rounded-lg p-6 shadow-sm flex flex-col items-start space-y-3">
+        <div class="w-10 h-10 text-b2b-petrol">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="w-full h-full">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+          </svg>
+        </div>
+        <h3 class="font-bold text-slate-800 text-sm">6. Reunião de resultados executivos</h3>
+        <p class="text-slate-600 text-xs leading-relaxed font-light">
+          Alinhamento estratégico final com a nossa equipe de especialistas corporativos para apresentação e discussão dos indicadores de clima.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Seção 7: Ativar Plataforma -->
+  <section class="py-16 px-6 max-w-7xl mx-auto border-t border-b2b-border" id="ativar">
+    <div class="bg-b2b-petrol text-white rounded-2xl p-8 sm:p-12 shadow-b2b-lg flex flex-col lg:flex-row items-center justify-between gap-8">
+      
+      <div class="lg:w-2/3 space-y-4">
+        <span class="px-3 py-1 rounded bg-white/10 text-xs text-b2b-accent font-semibold uppercase tracking-wider inline-block">Ativação Imediata</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Comece a estruturar a escuta ocupacional com a Radar Corp hoje mesmo</h2>
+        <p class="text-slate-300 text-sm sm:text-base leading-relaxed font-light">
+          A Radar Corp estrutura uma rotina robusta de escuta ocupacional com Inteligência Artificial, dados consolidados e relatórios gerenciais automáticos. A solução ideal para empresas que buscam agir com antecedência, compreender seus principais pontos de atenção e construir uma base organizada para ações preventivas de SST.
+        </p>
+        
+        <div class="grid sm:grid-cols-2 gap-3 pt-2 text-xs text-slate-200">
+          <div class="flex items-center gap-2">
+            <svg class="w-4 h-4 text-b2b-accent shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            <span>Implantação assistida e personalizada</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <svg class="w-4 h-4 text-b2b-accent shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            <span>Ajuste da linguagem ao perfil da equipe</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <svg class="w-4 h-4 text-b2b-accent shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            <span>Relatório gerencial de clima inicial</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <svg class="w-4 h-4 text-b2b-accent shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            <span>Condições comerciais exclusivas para novos clientes B2B</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:w-1/3 w-full shrink-0 flex flex-col items-center">
+        <a href="#leads-card" class="bg-white hover:bg-slate-100 text-b2b-petrol font-bold px-8 py-4 rounded text-xs uppercase tracking-wider block text-center transition-all w-full shadow-md">
+          Ativar a Radar Corp na minha empresa
+        </a>
+        <span class="text-[10px] text-slate-400 mt-3 text-center block font-light">Implantação ágil e assistida por nossos especialistas</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Conformidade Legal & Abordagem Técnica -->
+  <section id="compliance" class="border-t border-b2b-border bg-white py-20 px-6">
+    <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+      
+      <!-- Info -->
+      <div class="space-y-6">
+        <span class="text-xs text-b2b-green font-bold uppercase tracking-widest font-mono">Conformidade & GRO</span>
+        <h2 class="text-3xl font-extrabold text-b2b-title leading-tight">
+          A NR-1 e o Gerenciamento de Riscos Ocupacionais
+        </h2>
+        <p class="text-slate-600 leading-relaxed font-light text-sm">
+          A nova redação da NR-1 trouxe mais atenção à gestão de fatores psicossociais relacionados ao trabalho. Empresas que começarem antes terão mais tempo para estruturar e organizar seus processos preventivos.
+        </p>
+        <p class="text-slate-600 leading-relaxed font-light text-sm">
+          A Radar Corp atua como uma <strong>ferramenta de suporte tecnológico operacional</strong> que apoia o processo de conformidade do GRO/PGR. Por meio dela, a gestão pode identificar perigos potenciais, monitorar as percepções de sobrecarga e clima, e documentar as evidências históricas de acompanhamento de forma anônima e segura.
+        </p>
+        
+        <div class="p-4 bg-slate-50 border-l-4 border-b2b-green rounded text-xs text-slate-600 font-light space-y-1">
+          <p class="font-bold text-b2b-title uppercase tracking-wide text-[10px]">Aviso Importante</p>
+          <p>Esta solução serve de apoio operacional à gestão e não substitui os pareceres, exames médicos ou laudos periciais dos profissionais técnicos habilitados de SST da sua empresa.</p>
+        </div>
+      </div>
+
+      <!-- Visão do Dashboard -->
+      <div class="bg-white border border-b2b-border rounded-xl p-6 shadow-b2b">
+        <div class="flex justify-between items-center mb-6 border-b border-b2b-border pb-4">
+          <div>
+            <h3 class="text-b2b-title font-bold text-sm">Visão Geral do Painel</h3>
+            <p class="text-xs text-slate-500">Visão estatística por setor</p>
+          </div>
+          <span class="text-[10px] bg-b2b-petrol/5 text-b2b-petrolLight px-3 py-1 rounded-full border border-b2b-border font-bold">
+            Visão de Dashboard
+          </span>
+        </div>
+
+        <div class="grid grid-cols-3 gap-3 mb-6">
+          <div class="bg-b2b-bg border border-b2b-border rounded-lg p-4">
+            <p class="text-[10px] text-slate-400 font-bold uppercase">Adesão Voluntária</p>
+            <p class="text-2xl text-b2b-title font-bold">81%</p>
+          </div>
+          <div class="bg-b2b-bg border border-b2b-border rounded-lg p-4">
+            <p class="text-[10px] text-slate-400 font-bold uppercase">Setores Mapeados</p>
+            <p class="text-2xl text-b2b-title font-bold">6</p>
+          </div>
+          <div class="bg-b2b-bg border border-b2b-border rounded-lg p-4">
+            <p class="text-[10px] text-slate-400 font-bold uppercase">Pontos de Atenção</p>
+            <p class="text-2xl text-b2b-warning font-bold">2</p>
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          <div>
+            <div class="flex justify-between text-xs mb-1">
+              <span class="text-slate-600 font-medium">Percepção de sobrecarga</span>
+              <span class="text-b2b-warning font-bold text-[10px] uppercase bg-yellow-500/10 px-2 py-0.5 rounded">Alerta Moderado</span>
+            </div>
+            <div class="h-2 bg-slate-100 rounded-full">
+              <div class="h-2 bg-b2b-warning rounded-full w-[62%]"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-xs mb-1">
+              <span class="text-slate-600 font-medium">Clareza das demandas de trabalho</span>
+              <span class="text-b2b-greenSuccess font-bold text-[10px] uppercase bg-green-500/10 px-2 py-0.5 rounded">Estável</span>
+            </div>
+            <div class="h-2 bg-slate-100 rounded-full">
+              <div class="h-2 bg-b2b-greenSuccess rounded-full w-[85%]"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-xs mb-1">
+              <span class="text-slate-600 font-medium">Falhas de comunicação interna</span>
+              <span class="text-b2b-danger font-bold text-[10px] uppercase bg-red-500/10 px-2 py-0.5 rounded">Atenção</span>
+            </div>
+            <div class="h-2 bg-slate-100 rounded-full">
+              <div class="h-2 bg-b2b-danger rounded-full w-[71%]"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA Final -->
+  <section class="py-16 px-6 max-w-4xl mx-auto text-center relative z-10">
+    <div class="bg-white border border-b2b-border rounded-lg p-8 sm:p-12 space-y-6 shadow-b2b-lg flex flex-col items-center">
+      <div class="w-12 h-12 bg-b2b-petrol/5 border border-b2b-petrol/10 text-b2b-petrol rounded-full flex items-center justify-center">
+        <svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+      </div>
+      
+      <div class="space-y-3">
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-b2b-title leading-tight">
+          Enxergue sinais e tendências antes que se tornem problemas
+        </h2>
+        <p class="text-slate-600 text-sm sm:text-base max-w-xl mx-auto font-light leading-relaxed">
+          Sem trocar de sistema, sem complexidade e sem aplicativo novo. Proteja sua equipe coletando feedbacks voluntários via WhatsApp e consolide seus indicadores de riscos psicossociais.
+        </p>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="#leads-card" class="bg-b2b-petrol hover:bg-b2b-petrolLight text-white font-bold px-8 py-4 rounded text-xs uppercase tracking-wider transition-all shadow-sm">
+          Agendar demonstração comercial
+        </a>
+        <a href="#solucao" class="bg-white border border-b2b-border hover:border-slate-300 text-b2b-text font-bold px-8 py-4 rounded text-xs uppercase tracking-wider transition-all">
+          Entender como funciona
+        </a>
+      </div>
+
+      <p class="text-slate-400 text-[9px] uppercase tracking-widest font-mono font-bold">Radar Corp — Gestão Preventiva Sob Demanda</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-b2b-border py-10 text-center text-xs text-slate-500 relative z-10 bg-white">
+    <div class="max-w-7xl mx-auto px-6 space-y-3">
+      <p class="font-bold text-b2b-title tracking-tight">RADAR CORP</p>
+      <p class="max-w-2xl mx-auto font-light leading-relaxed">
+        A Radar Corp é uma plataforma B2B de dados e tecnologia de apoio à identificação e ao acompanhamento de fatores psicossociais relacionados ao trabalho. A nossa solução serve de suporte ao GRO/PGR e não substitui os exames clínicos ou o parecer técnico dos profissionais habilitados de SST da sua organização.
+      </p>
+      <p class="text-[10px] text-slate-400">© 2026 Radar Corp. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- ==================== LOGICA JAVASCRIPT ==================== -->
+  <script>
+    // Estado do formulário qualificado comercialmente
+    const leadState = {
+      empresa: '',
+      tamanho: '',       // colabs
+      dor: '',           // interesse
+      cargo: '',
+      nome: '',
+      email: '',
+      whatsapp: '',
+      source: 'landing_b2b_radar_corp',
+    };
+
+    let activeStep = 1;
+    const totalSteps = 5;
+
+    // Interceptor de cliques em âncoras para manter a URL limpa (sem hashes na barra do navegador)
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const targetId = this.getAttribute('href').substring(1);
+          const targetEl = document.getElementById(targetId);
+          if (targetEl) {
+            targetEl.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+    });
+
+    // Seleção de tamanho de empresa (Passo 1)
+    function selectColab(val, btn) {
+      document.querySelectorAll('.colab-opt').forEach(opt => {
+        opt.classList.remove('border-b2b-petrol', 'bg-b2b-petrol/5', 'text-b2b-petrol');
+        opt.classList.add('border-b2b-border', 'bg-white', 'text-slate-600');
+      });
+      btn.classList.remove('border-b2b-border', 'bg-white', 'text-slate-600');
+      btn.classList.add('border-b2b-petrol', 'bg-b2b-petrol/5', 'text-b2b-petrol');
+      leadState.tamanho = val;
+    }
+
+    // Seleção de principal interesse comercial (Passo 2)
+    function selectConcern(val, btn) {
+      document.querySelectorAll('.concern-opt').forEach(opt => {
+        opt.classList.remove('border-b2b-petrol', 'bg-b2b-petrol/5', 'text-b2b-petrol');
+        opt.classList.add('border-b2b-border', 'bg-white', 'text-slate-600');
+      });
+      btn.classList.remove('border-b2b-border', 'bg-white', 'text-slate-600');
+      btn.classList.add('border-b2b-petrol', 'bg-b2b-petrol/5', 'text-b2b-petrol');
+      leadState.dor = val;
+    }
+
+    // Seleção de função/cargo (Passo 3)
+    function selectCargo(val, btn) {
+      document.querySelectorAll('.cargo-opt').forEach(opt => {
+        opt.classList.remove('border-b2b-petrol', 'bg-b2b-petrol/5', 'text-b2b-petrol');
+        opt.classList.add('border-b2b-border', 'bg-white', 'text-slate-600');
+      });
+      btn.classList.remove('border-b2b-border', 'bg-white', 'text-slate-600');
+      btn.classList.add('border-b2b-petrol', 'bg-b2b-petrol/5', 'text-b2b-petrol');
+      leadState.cargo = val;
+    }
+
+    // Máscara dinâmica de telefone
+    function maskPhone(input) {
+      let v = input.value.replace(/\D/g, '');
+      if (v.length > 11) v = v.slice(0, 11);
+      if (v.length > 7) {
+        v = '(' + v.slice(0,2) + ') ' + v.slice(2, 7) + '-' + v.slice(7);
+      } else if (v.length > 2) {
+        v = '(' + v.slice(0,2) + ') ' + v.slice(2);
+      } else if (v.length > 0) {
+        v = '(' + v;
+      }
+      input.value = v;
+    }
+
+    // Transição de etapas do formulário
+    function nextStep(step) {
+      // Validações por etapa
+      if (activeStep === 1) {
+        const empInput = document.getElementById('q-empresa').value.trim();
+        if (!empInput) {
+          alert('Por favor, insira o nome da sua empresa para avançar.');
+          return;
+        }
+        if (!leadState.tamanho) {
+          alert('Por favor, selecione a quantidade estimada de colaboradores.');
+          return;
+        }
+        leadState.empresa = empInput;
+      }
+
+      if (activeStep === 2 && !leadState.dor) {
+        alert('Por favor, selecione o seu principal interesse comercial.');
+        return;
+      }
+
+      if (activeStep === 3 && !leadState.cargo) {
+        alert('Por favor, selecione o seu cargo ou função corporativa.');
+        return;
+      }
+
+      if (activeStep === 4) {
+        const nomeInput = document.getElementById('q-nome').value.trim();
+        const emailInput = document.getElementById('q-email').value.trim();
+        if (!nomeInput || !emailInput) {
+          alert('Por favor, preencha o seu nome completo e e-mail corporativo.');
+          return;
+        }
+        leadState.nome = nomeInput;
+        leadState.email = emailInput;
+      }
+
+      document.getElementById(`q-step-${activeStep}`).classList.add('hidden');
+      document.getElementById(`q-step-${activeStep}`).classList.remove('step-active');
+      
+      activeStep = step;
+      
+      document.getElementById(`q-step-${activeStep}`).classList.remove('hidden');
+      document.getElementById(`q-step-${activeStep}`).classList.add('step-active');
+
+      updateProgressBar();
+    }
+
+    // Lógica do botão de voltar
+    function prevStep(step) {
+      document.getElementById(`q-step-${activeStep}`).classList.add('hidden');
+      document.getElementById(`q-step-${activeStep}`).classList.remove('step-active');
+      
+      activeStep = step;
+      
+      document.getElementById(`q-step-${activeStep}`).classList.remove('hidden');
+      document.getElementById(`q-step-${activeStep}`).classList.add('step-active');
+
+      updateProgressBar();
+    }
+
+    function updateProgressBar() {
+      const bar = document.getElementById('progress-bar');
+      const label = document.getElementById('step-label');
+      const pctLabel = document.getElementById('step-percentage');
+      
+      const pct = (activeStep / totalSteps) * 100;
+      bar.style.width = pct + '%';
+      label.textContent = `Passo ${activeStep} de ${totalSteps}`;
+      pctLabel.textContent = pct + '%';
+    }
+
+    // Submissão do lead qualificado
+    function submitLP() {
+      const whatsappVal = document.getElementById('q-whatsapp').value.trim();
+      const cleanPhone = whatsappVal.replace(/\D/g, '');
+
+      if (cleanPhone.length < 10 || cleanPhone.length > 11) {
+        alert('Por favor, insira um WhatsApp corporativo válido com DDD.');
+        return;
+      }
+
+      leadState.whatsapp = whatsappVal;
+
+      // Executa envio de dados comercial
+      enviarDados(leadState);
+
+      // Transição para tela de sucesso
+      document.getElementById(`q-step-${activeStep}`).classList.add('hidden');
+      document.getElementById(`q-step-${activeStep}`).classList.remove('step-active');
+      
+      document.getElementById('q-step-success').classList.remove('hidden');
+      document.getElementById('q-step-success').classList.add('step-active');
+
+      document.getElementById('resp-nome').textContent = leadState.nome.split(' ')[0];
+      document.getElementById('resp-empresa').textContent = leadState.empresa;
+      
+      // Esconder progresso
+      document.getElementById('progress-bar').parentElement.parentElement.classList.add('hidden');
+    }
+
+    // Envio dos dados para API
+    async function enviarDados(data) {
+      console.log('[LOG] Enviando solicitação comercial:', JSON.stringify(data, null, 2));
+      
+      // Salvar no localStorage
+      try {
+        const leads = JSON.parse(localStorage.getItem('radar_corp_leads') || '[]');
+        leads.push(data);
+        localStorage.setItem('radar_corp_leads', JSON.stringify(leads));
+      } catch (e) {
+        console.warn('[WARNING] Erro ao salvar no localStorage:', e.message);
+      }
+
+      // Hack Google Forms se ativado
+      const GOOGLE_FORMS_CONFIG = {
+        enabled: false,
+        formId: 'SEU_ID_DO_GOOGLE_FORM_AQUI', 
+        entries: {
+          empresa: 'entry.111111111',   
+          tamanho: 'entry.222222222',   
+          dor: 'entry.333333333',       
+          cargo: 'entry.444444444',     
+          nome: 'entry.555555555',      
+          email: 'entry.666666666',     
+          whatsapp: 'entry.777777777',  
+        }
+      };
+
+      if (GOOGLE_FORMS_CONFIG.enabled) {
+        try {
+          const formUrl = `https://docs.google.com/forms/u/0/d/e/${GOOGLE_FORMS_CONFIG.formId}/formResponse`;
+          const formData = new URLSearchParams();
+          
+          formData.append(GOOGLE_FORMS_CONFIG.entries.empresa, data.empresa);
+          formData.append(GOOGLE_FORMS_CONFIG.entries.tamanho, data.tamanho);
+          formData.append(GOOGLE_FORMS_CONFIG.entries.dor, data.dor);
+          formData.append(GOOGLE_FORMS_CONFIG.entries.cargo, data.cargo);
+          formData.append(GOOGLE_FORMS_CONFIG.entries.nome, data.nome);
+          formData.append(GOOGLE_FORMS_CONFIG.entries.email, data.email);
+          formData.append(GOOGLE_FORMS_CONFIG.entries.whatsapp, data.whatsapp);
+
+          fetch(formUrl, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: formData.toString()
+          });
+          console.log('[LOG] Qualificação enviada para o Google Forms em background!');
+        } catch (err) {
+          console.warn('[WARNING] Erro no envio para o Google Forms:', err.message);
+        }
+      }
+
+      // Envia ao servidor
+      try {
+        const response = await fetch('/api/leads', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+        const res = await response.json();
+        if (res.status === 'success') {
+          console.log('[LOG] Qualificação salva com sucesso no banco de dados. ID:', res.id);
+        } else {
+          console.warn('[WARNING] Resposta parcial do servidor:', res.message);
+        }
+      } catch (err) {
+        console.warn('[WARNING] Servidor offline ou indisponível. Salvo em modo de contingência local.', err.message);
+      }
+    }
+  </script>
+</body>
+</html>

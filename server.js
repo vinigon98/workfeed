@@ -246,7 +246,7 @@ app.get('/api/stats', async (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`[LOG] Workfeed — Servidor rodando em http://localhost:${PORT}`);
-  console.log(`[LOG] Landing Page: http://localhost:${PORT}/landing`);
+  console.log(`[LOG] Landing Page: http://localhost:${PORT}`);
   console.log(`[LOG] Lead Capture API: POST http://localhost:${PORT}/api/leads`);
   console.log(`[LOG] Dashboard API:    GET  http://localhost:${PORT}/api/stats`);
 });
